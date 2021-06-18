@@ -32,13 +32,13 @@
                 <div class="grid py-6 grid-cols-2 gap-5">
                     <div class="col-span-2 lg:col-span-1 p-4 bg-gray-800 rounded-md shadow-md text-gray-300 space-y-1">
                         <p class="text-center">
-                            Render minute graph here...
+                            @dump($minutes)
                         </p>
                     </div>
 
                     <div class="col-span-2 lg:col-span-1 p-4 bg-gray-800 rounded-md shadow-md text-gray-300 space-y-1">
                         <p class="text-center">
-                            Render hour graph here...
+                            @dump($hours)
                         </p>
                     </div>
                 </div>
