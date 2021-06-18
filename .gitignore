@@ -1,0 +1,35 @@
+# PHP & Composer
+/vendor
+/storage/*.key
+/storage/debugbar
+.phpunit.result.cache
+.phpstorm.meta.php
+.php-cs-fixer.cache
+.php_cs.cache
+_ide_*.php
+.env.backup
+.env
+
+# NPM & Mix
+/node_modules
+/public/hot
+/public/storage
+/public/js
+/public/css
+/public/mix-manifest.json
+
+# Error logs
+npm-debug.log
+yarn-error.log
+
+# Homestead
+Homestead.json
+Homestead.yaml
+
+# Sail & Docker
+docker-compose.override.yml
+supervisord.pid
+supervisord.log
+
+# Misc
+TODO
