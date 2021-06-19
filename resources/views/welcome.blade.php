@@ -57,7 +57,7 @@
         </p>
         <p>
             Get the
-            <a href="https://github.com/Senither/hypixel-skyblock-facade"
+            <a href="https://github.com/Senither/hypixel-skyblock-facade-stats"
                class="text-indigo-500 hover:text-indigo-400 hover:underline">source code</a>
             on GitHub.
         </p>
