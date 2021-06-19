@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\History;
+use Carbon\Carbon;
 
 class StatsController extends Controller
 {
@@ -14,37 +15,59 @@ class StatsController extends Controller
     public function index()
     {
         return view('welcome', [
-            'minutes' => $this->getMinuteStats(),
-            'hours' => $this->getHourStats(),
+            'stats' => [
+                'minutes' => $this->getMinuteStats(),
+                'hours' => $this->getHourStats(),
+            ],
         ]);
     }
 
     /**
-     * Get the minute history data for the last hour.
+     * Get the minute history data for the last three hours.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return Collection
      */
     protected function getMinuteStats()
     {
         return app('cache')->remember('stats.minute', 60, function () {
-            return History::latest()
-                ->limit(3600)
-                ->pluck('last_minute', 'created_at');
+            return $this->formatTimes(
+                History::latest()
+                    ->limit(180)
+                    ->pluck('last_minute', 'created_at')
+            );
         });
     }
 
     /**
-     * Get the hour history data for the last month, with two records for each hour.
+     * Get the hour history data for the last 7 days, with two records for each hour.
      *
-     * @return \Illuminate\Database\Eloquent\Collection
+     * @return \Illuminate\Support\Collection
      */
     protected function getHourStats()
     {
         return app('cache')->remember('stats.hour', 900, function () {
-            return History::latest()
-                ->limit(1440)
-                ->where('last_hour', '>', 0)
-                ->pluck('last_hour', 'created_at');
+            return $this->formatTimes(
+                History::latest()
+                    ->limit(336)
+                    ->where('last_hour', '>', 0)
+                    ->pluck('last_hour', 'created_at')
+            );
+        });
+    }
+
+    /**
+     * Maps over the given collection, formatting the
+     * keys into more human friendly date and times.
+     *
+     * @param \Illuminate\Support\Collection $collection
+     * @return void
+     */
+    protected function formatTimes($collection)
+    {
+        return $collection->mapWithKeys(function ($value, $key) {
+            $time = new Carbon($key);
+
+            return [$time->rawFormat('M j, Y - H:i') => $value];
         });
     }
 }

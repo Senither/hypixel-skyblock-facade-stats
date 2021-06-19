@@ -31,15 +31,13 @@
             <section class="mx-auto max-w-full">
                 <div class="grid py-6 grid-cols-2 gap-5">
                     <div class="col-span-2 lg:col-span-1 p-4 bg-gray-800 rounded-md shadow-md text-gray-300 space-y-1">
-                        <p class="text-center">
-                            @dump($minutes)
-                        </p>
+                        <h3 class="text-xl text-center">Every minute (Last 3 hours)</h3>
+                        <div id="chart-minutes"></div>
                     </div>
 
                     <div class="col-span-2 lg:col-span-1 p-4 bg-gray-800 rounded-md shadow-md text-gray-300 space-y-1">
-                        <p class="text-center">
-                            @dump($hours)
-                        </p>
+                        <h3 class="text-xl text-center">Every 30 minutes (Last 7 days)</h3>
+                        <div id="chart-hours"></div>
                     </div>
                 </div>
             </section>
@@ -65,6 +63,76 @@
         </p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.27.1/dist/apexcharts.min.js"></script>
+    @foreach (['minutes', 'hours'] as $collection)
+        <script>
+            (new ApexCharts(document.querySelector('#chart-{{ $collection }}'), {
+                chart: {
+                    height: 350,
+                    type: 'line',
+                    zoom: {
+                        enabled: false,
+                    },
+                    animations: {
+                        enabled: false,
+                    },
+                },
+                dataLabels: {
+                    enabled: false,
+                },
+                colors: ['#818CF8'],
+                series: [{
+                    name: 'Requests in the last {{ mb_substr($collection, 0, mb_strlen($collection) - 1) }}',
+                    data: {!! json_encode($stats[$collection]->values()) !!},
+                }],
+                stroke: {
+                    width: 3,
+                    curve: 'straight',
+                },
+                xaxis: {
+                    categories: {!! json_encode($stats[$collection]->keys()) !!},
+                    tickAmount: 10,
+                    labels: {
+                        show: true,
+                        style: {
+                            colors: {!! json_encode($stats[$collection]->map(fn() => '#5D7280')->values()) !!},
+                        },
+                    },
+                },
+                yaxis: [{
+                    axisTicks: {
+                        show: false,
+                    },
+                    axisBorder: {
+                        show: true,
+                        color: '#818CF8',
+                    },
+                    labels: {
+                        style: {
+                            colors: '#818CF8',
+                        }
+                    },
+                    title: {
+                        text: '{{ ucfirst($collection) }}',
+                        style: {
+                            color: '#818CF8',
+                        },
+                    },
+                }],
+                tooltip: {
+                    theme: 'dark',
+                    z: {
+                        title: 'Requests'
+                    },
+                },
+                legend: {
+                    horizontalAlign: 'left',
+                    offsetX: 40,
+                }
+            })).render()
+
+        </script>
+    @endforeach
 </body>
 
 </html>
