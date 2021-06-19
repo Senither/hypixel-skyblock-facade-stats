@@ -31,10 +31,18 @@ class StatsCollectCommand extends Command
      */
     public function handle()
     {
+        $url = config('facade.url');
+        if ($url == null || \mb_strlen(trim($url)) == 0) {
+            $this->warn('The facade URL have not been configured yet!');
+            $this->warn('You must first set up the facade URL in the .env file');
+
+            return 1;
+        }
+
         $response = app(Factory::class)
             ->accept('application/json')
             ->withHeaders(['Authorization' => Str::uuid()->toString()])
-            ->get('https://hypixel-api.senither.com/v1/stats');
+            ->get(config('facade.url'));
 
         if ($response->status() !== 200) {
             $this->warn('API responded with a non-success status code, skipping logging.');
