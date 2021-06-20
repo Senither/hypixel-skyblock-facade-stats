@@ -25,7 +25,7 @@ class StatsController extends Controller
     /**
      * Get the minute history data for the last three hours.
      *
-     * @return Collection
+     * @return \Illuminate\Support\Collection
      */
     protected function getMinuteStats()
     {
@@ -34,6 +34,7 @@ class StatsController extends Controller
                 History::latest()
                     ->limit(180)
                     ->pluck('last_minute', 'created_at')
+                    ->reverse()
             );
         });
     }
@@ -51,6 +52,7 @@ class StatsController extends Controller
                     ->limit(336)
                     ->where('last_hour', '>', 0)
                     ->pluck('last_hour', 'created_at')
+                    ->reverse()
             );
         });
     }
