@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Hypixel Facade Status</title>
+    <title>Hypixel Facade Stats</title>
     <link href="/css/app.css" rel="stylesheet">
 </head>
 
@@ -13,6 +13,7 @@
 
     <div class="container mx-auto px-4">
         <div>
+
             <section class="py-12 px-4 text-center">
                 <div class="w-full max-w-3xl mx-auto">
                     <h2 class="text-4xl md:text-5xl lg:text-6xl mt-2 mb-6 leading-tight font-extrabold font-heading">
@@ -44,7 +45,6 @@
 
         </div>
     </div>
-
 
     <footer class="p-12 text-gray-500 text-center">
         <p>
