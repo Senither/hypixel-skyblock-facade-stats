@@ -15,11 +15,28 @@ class StatsController extends Controller
     public function index()
     {
         return view('welcome', [
+            'sums' => $this->getHistorySums(),
             'stats' => [
                 'minutes' => $this->getMinuteStats(),
                 'hours' => $this->getHourStats(),
             ],
         ]);
+    }
+
+    /**
+     * Get the sums of the requests made to the API, both total requests,
+     * and the amount of requests made in the last month.
+     *
+     * @return array
+     */
+    protected function getHistorySums()
+    {
+        return app('cache')->remember('stats.sums', 60, function () {
+            return [
+                'total' => History::sum('last_minute'),
+                'last_month' => History::where('created_at', '>', Carbon::now()->subMonth())->sum('last_minute'),
+            ];
+        });
     }
 
     /**

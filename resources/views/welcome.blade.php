@@ -19,12 +19,22 @@
                     <h2 class="text-4xl md:text-5xl lg:text-6xl mt-2 mb-6 leading-tight font-extrabold font-heading">
                         Hypixel <span class="text-indigo-500 underline">Facade</span> Stats
                     </h2>
-                    <p class="mb-8 text-gray-500 text-lg font-medium leading-relaxed">
+                    <p class="mb-12 text-gray-500 text-lg font-medium leading-relaxed">
                         Displays stats over time for the
                         <a href="https://hypixel-api.senither.com/" target="_blank" class="text-indigo-400 hover:text-indigo-500">
                             senither/hypixel-skyblock-facade
                         </a>
                         project.
+                    </p>
+
+                    <p class="text-gray-400 text-xl font-semibold leading-relaxed group">
+                        The API has served <span class="font-medium text-indigo-400 group-hover:text-indigo-500 transition-colors">
+                            {{ number_format($sums['last_month']) }}
+                        </span> requests in the last month,
+                        <br class="hidden sm:block" />
+                        and <span class="font-medium text-indigo-400 group-hover:text-indigo-500 transition-colors">
+                            {{ number_format($sums['total']) }}
+                        </span> requests since the stats collection system was built.
                     </p>
                 </div>
             </section>
@@ -130,7 +140,6 @@
                     offsetX: 40,
                 }
             })).render()
-
         </script>
     @endforeach
 </body>
