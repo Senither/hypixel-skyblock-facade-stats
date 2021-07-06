@@ -14,7 +14,7 @@ class StatsController extends Controller
      */
     public function index()
     {
-        return view('welcome', [
+        return view('landing', [
             'sums' => $this->getHistorySums(),
             'stats' => [
                 'minutes' => $this->getMinuteStats(),
